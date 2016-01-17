@@ -1,9 +1,8 @@
 package anabalen_zadaca_4.controller;
 
+import anabalen_zadaca_4.helper.AutomobilHelper;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
 import anabalen_zadaca_4.view.PrikazPodataka;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,6 +23,10 @@ public class KontrolerAplikacije {
         
         prikaz = new PrikazPodataka();
         prikaz.ispisiIzbornik();
+        
+        /* inicijalizacija automobila */
+        AutomobilHelper aHelper = new AutomobilHelper();
+        aHelper.kreirajAutomobil(postavke);
 
         String unos = "";
 
@@ -38,28 +41,37 @@ public class KontrolerAplikacije {
             if (unos.matches("[0-9]")) {
                 switch (Integer.parseInt(unos)) {
                     case 1:
-
+                        /* zatvaranje parkirališta za nove ulaze automobila */
+                        prikaz.ispisi("" + postavke.getBrojAutomobila());
+                        prikaz.ispisi("Izabrana je opcija 1. \n");
                         break;
                     case 2:
-
+                        /* otvaranje parkirališta za nove ulaze automobila */
+                        prikaz.ispisi("Izabrana je opcija 2. \n");
                         break;
                     case 3:
-
+                        /* ispis zarada od parkiranja po zonama */
+                        prikaz.ispisi("Izabrana je opcija 3. \n");
                         break;
                     case 4:
-
+                        /* ispis zarada od kazni po zonama */
+                        prikaz.ispisi("Izabrana je opcija 4. \n");
                         break;
                     case 5:
-
+                        /* ispis broja automobila koji nisu mogli parkirati po zonama */
+                        prikaz.ispisi("Izabrana je opcija 5. \n");
                         break;
                     case 6:
-
+                        /* ispis broja automobila koje je pauk odveo na deponij po zonama */
+                        prikaz.ispisi("Izabrana je opcija 6. \n");
                         break;
                     case 7:
-
+                        /* ispis 5 automobila s najviše parkirana */
+                        prikaz.ispisi("Izabrana je opcija 7. \n");
                         break;
                     case 8:
-
+                        /* stanje parkirnih mjesta po zonama (% zauzetih) */
+                        prikaz.ispisi("Izabrana je opcija 8. \n");
                         break;
                 }
             }
