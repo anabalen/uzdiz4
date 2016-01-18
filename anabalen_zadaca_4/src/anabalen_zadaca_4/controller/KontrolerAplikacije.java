@@ -2,8 +2,14 @@ package anabalen_zadaca_4.controller;
 
 import anabalen_zadaca_4.helper.AutomobilHelper;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
+import anabalen_zadaca_4.parkiraliste.Parkiraliste;
+import anabalen_zadaca_4.state.Context;
+import anabalen_zadaca_4.state.OtvoriParkiraliste;
+import anabalen_zadaca_4.state.State;
+import anabalen_zadaca_4.state.ZatvoriParkiraliste;
 import anabalen_zadaca_4.view.PrikazPodataka;
 import java.util.Scanner;
+
 
 /**
  *
@@ -13,6 +19,7 @@ public class KontrolerAplikacije {
 
     private PostavkeAplikacije postavke;
     private PrikazPodataka prikaz;
+    boolean statusParkinga = true;
 
     public KontrolerAplikacije() {
     }
@@ -28,6 +35,15 @@ public class KontrolerAplikacije {
         AutomobilHelper aHelper = new AutomobilHelper();
         aHelper.kreirajAutomobil(postavke);
 
+        /* kreiranje parkirališta */
+        Parkiraliste parkiraliste = new Parkiraliste(statusParkinga, postavke.getBrojZona());
+        System.out.println("Status: " + parkiraliste.isStatus());
+        
+        Context context = new Context();
+        Parkiraliste noviStatus;
+        
+        
+        
         String unos = "";
 
         do {
@@ -41,13 +57,19 @@ public class KontrolerAplikacije {
             if (unos.matches("[0-9]")) {
                 switch (Integer.parseInt(unos)) {
                     case 1:
-                        /* zatvaranje parkirališta za nove ulaze automobila */
-                        prikaz.ispisi("" + postavke.getBrojAutomobila());
-                        prikaz.ispisi("Izabrana je opcija 1. \n");
+                        /* zatvaranje parkirališta za nove ulaze automobila */                    
+                        State zatvori = new ZatvoriParkiraliste();
+                        context.setState(zatvori);
+                        noviStatus = context.doAction(parkiraliste);
+                        System.out.println("novi status nakon zatvaranja: " + parkiraliste.isStatus());
+                        
                         break;
                     case 2:
                         /* otvaranje parkirališta za nove ulaze automobila */
-                        prikaz.ispisi("Izabrana je opcija 2. \n");
+                        State otvori = new OtvoriParkiraliste();
+                        context.setState(otvori);
+                        noviStatus = context.doAction(parkiraliste);
+                        System.out.println("novi status nakon otvaranja: " + parkiraliste.isStatus());
                         break;
                     case 3:
                         /* ispis zarada od parkiranja po zonama */

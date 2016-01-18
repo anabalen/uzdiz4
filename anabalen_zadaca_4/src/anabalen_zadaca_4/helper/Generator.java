@@ -1,7 +1,5 @@
 package anabalen_zadaca_4.helper;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Random;
 
 /**
@@ -17,7 +15,7 @@ public class Generator {
 
         Random slucajniBroj = new Random();
         generiranaVrijednost1 = slucajniBroj.nextFloat();
-   
+           
         return generiranaVrijednost1;
     }
     
@@ -26,7 +24,7 @@ public class Generator {
 
         Random slucajniBroj = new Random();
         generiranaVrijednost2 = slucajniBroj.nextFloat();
-   
+
         return generiranaVrijednost2;
     }
     
@@ -37,6 +35,27 @@ public class Generator {
         generiranaVrijednost3 = slucajniBroj.nextFloat();
    
         return generiranaVrijednost3;
+    }
+    
+    public int generirajOdabir(){
+        int generiraniOdabir = 0;
+        int generiranaVrijednostZaOdabir;
+        
+        Random slucajniBroj = new Random();
+        generiranaVrijednostZaOdabir = slucajniBroj.nextInt((100 - 0)+1);
+        
+        if(generiranaVrijednostZaOdabir >=0 && generiranaVrijednostZaOdabir <= 25){
+            generiraniOdabir = 0;
+        }
+        else if(generiranaVrijednostZaOdabir >25 && generiranaVrijednostZaOdabir <= 75){
+            generiraniOdabir = 1;
+        }
+        else if(generiranaVrijednostZaOdabir >75 && generiranaVrijednostZaOdabir <= 100){
+            generiraniOdabir = 2;
+        }
+        
+        //System.out.println(generiranaVrijednostZaOdabir + " i generirani odabir je: " + generiraniOdabir);
+        return generiraniOdabir;
     }
     
     

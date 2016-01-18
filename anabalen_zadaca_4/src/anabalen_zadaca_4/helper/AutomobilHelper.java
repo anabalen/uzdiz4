@@ -36,8 +36,9 @@ public class AutomobilHelper {
             float generiranaVrijednost1 = generator.generirajVrijednost1();
             float generiranaVrijednost2 = generator.generirajVrijednost2();
             float generiranaVrijednost3 = generator.generirajVrijednost3();
+            //float generiranaVrijednostZaOdabir = generator.generirajOdabir();
             
-            ulaz = (float)(postavke.getVremenskaJedinica()/postavke.getIntervalDolaska())*generiranaVrijednost1;
+            ulaz = (float)((postavke.getVremenskaJedinica()/postavke.getIntervalDolaska())*generiranaVrijednost1)*1000;
             zona = (int) (postavke.getBrojZona() * generiranaVrijednost2) + 1;
             iznos = (postavke.getBrojZona() + 1 - zona) * postavke.getCijenaJedinice();
 
