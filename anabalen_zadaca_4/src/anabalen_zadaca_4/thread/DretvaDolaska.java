@@ -45,19 +45,11 @@ public class DretvaDolaska extends Thread {
 
     @Override
     public void interrupt() {
-        if (!radi) {
-            super.interrupt();
-            //System.out.println("Dretva je prekinuta.");
-
-        } else {
-            System.out.println("Dretva radi!");
-        }
+        super.interrupt();
     }
 
     @Override
     public void run() {
-        long pocetak, vrijeme;
-
         //System.out.println("Dretva aktivirana.");
         aktivna = true;
 
@@ -223,4 +215,45 @@ public class DretvaDolaska extends Thread {
         this.iznosZona4 = iznosZona4;
     }
 
+    public List<Automobil> getZona4() {
+        return zona4;
+    }
+
+    public List<Automobil> getZona3() {
+        return zona3;
+    }
+
+    public List<Automobil> getZona2() {
+        return zona2;
+    }
+
+    public List<Automobil> getZona1() {
+        return zona1;
+    }
+
+    public List<Automobil> getSviAuti() {
+        return sviAuti;
+    }
+
+    public void setZona4(List<Automobil> zona4) {
+        this.zona4 = zona4;
+    }
+
+    public void setZona3(List<Automobil> zona3) {
+        this.zona3 = zona3;
+    }
+
+    public void setZona2(List<Automobil> zona2) {
+        this.zona2 = zona2;
+    }
+
+    public void setZona1(List<Automobil> zona1) {
+        this.zona1 = zona1;
+    }
+
+    public void setSviAuti(List<Automobil> sviAuti) {
+        this.sviAuti = sviAuti;
+    }
+
+    
 }

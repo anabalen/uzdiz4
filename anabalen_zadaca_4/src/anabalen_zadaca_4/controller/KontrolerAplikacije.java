@@ -29,6 +29,11 @@ public class KontrolerAplikacije {
     private DretvaDolaska dretvaDolaska;
     private DretvaOdlaska dretvaOdlaska;
 
+    List<Automobil> zona4;
+    List<Automobil> zona3;
+    List<Automobil> zona2;
+    List<Automobil> zona1;
+
     public KontrolerAplikacije() {
     }
 
@@ -55,23 +60,25 @@ public class KontrolerAplikacije {
             dretvaDolaska.postavljanjeZona();
             dretvaDolaska.start();
             aktivnaDretva = true;
+            zona1 = dretvaDolaska.getZona1();
+            zona2 = dretvaDolaska.getZona2();
+            zona3 = dretvaDolaska.getZona3();
+            zona4 = dretvaDolaska.getZona4();
+            sviAuti = dretvaDolaska.getSviAuti();
+
         } else {
             System.out.println("Dretva dolaska je vec pokrenuta.");
         }
-        
+
         /* pokreni dretvu odlaska */
-       /*
-               if (!aktivnaDrugaDretva) {
-            dretvaOdlaska = new DretvaOdlaska();
-            
-           
+        if (!aktivnaDrugaDretva) {
+            dretvaOdlaska = new DretvaOdlaska(postavke, sviAuti, zona1, zona2, zona3, zona4, dretvaDolaska);
+
             dretvaOdlaska.start();
             aktivnaDrugaDretva = true;
         } else {
             System.out.println("Dretva odlaska je vec pokrenuta.");
         }
-        */
-        
 
         Context context = new Context();
         Parkiraliste noviStatus;
@@ -147,5 +154,6 @@ public class KontrolerAplikacije {
         } while (!"Q".equals(unos));
 
         dretvaDolaska.interrupt();
+        dretvaOdlaska.interrupt();
     }
 }

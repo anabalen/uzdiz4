@@ -19,6 +19,7 @@ public class AutomobilHelper {
     int zona;
     int iznos;
     float ulaz;
+    int vrijemeParkiranja;
 
     Generator generator = new Generator();
     List<Automobil> sviAuti = new ArrayList<>();
@@ -46,8 +47,9 @@ public class AutomobilHelper {
             ulaz = (float) ((postavke.getVremenskaJedinica() / postavke.getIntervalDolaska()) * generiranaVrijednost1) * 1000;
             zona = (int) (postavke.getBrojZona() * generiranaVrijednost2) + 1;
             iznos = (postavke.getBrojZona() + 1 - zona) * postavke.getCijenaJedinice();
+            vrijemeParkiranja = zona * postavke.getMaksParkiranje() * postavke.getVremenskaJedinica();
 
-            automobil = new Automobil(brojac, ulaz, zona, true, iznos, generiranaVrijednost1, generiranaVrijednost2, generiranaVrijednost3);
+            automobil = new Automobil(brojac, ulaz, zona, true, iznos, vrijemeParkiranja, generiranaVrijednost1, generiranaVrijednost2, generiranaVrijednost3);
             System.out.println(automobil.getRedniBroj() + " " + automobil.getUlaz() + " Zona: " + automobil.getZona() + " " + automobil.getIznos());
 
             sviAuti.add(automobil);

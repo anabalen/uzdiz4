@@ -10,6 +10,7 @@ public class Automobil {
     int zona;
     boolean status;
     int iznos;
+    int vrijemeParkiranja;
     float generiranaVrijednost1;
     float generiranaVrijednost2;
     float generiranaVrijednost3;
@@ -18,12 +19,13 @@ public class Automobil {
     public Automobil() {
     }
     
-    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3){
+    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3){
         this.redniBroj = redniBroj;
         this.ulaz = ulaz;
         this.zona = zona;
         this.status = status;
         this.iznos = iznos;
+        this.vrijemeParkiranja = vrijemeParkiranja;
         this.generiranaVrijednost1 = generiranaVrijednost1;
         this.generiranaVrijednost2 = generiranaVrijednost2;
         this.generiranaVrijednost3 = generiranaVrijednost3;
@@ -91,6 +93,14 @@ public class Automobil {
 
     public void setGeneriranaVrijednost3(float generiranaVrijednost3) {
         this.generiranaVrijednost3 = generiranaVrijednost3;
+    }
+
+    public int getVrijemeParkiranja() {
+        return vrijemeParkiranja;
+    }
+
+    public void setVrijemeParkiranja(int vrijemeParkiranja) {
+        this.vrijemeParkiranja = vrijemeParkiranja;
     }
     
     
