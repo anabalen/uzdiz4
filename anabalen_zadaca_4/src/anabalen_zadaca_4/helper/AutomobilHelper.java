@@ -1,10 +1,10 @@
 package anabalen_zadaca_4.helper;
 
-import anabalen_zadaca_4.MainClass;
 import anabalen_zadaca_4.automobili.Automobil;
-import anabalen_zadaca_4.controller.KontrolerAplikacije;
-import anabalen_zadaca_4.controller.ValidatorPostavki;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
+import anabalen_zadaca_4.parkiraliste.Parkiraliste;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +13,7 @@ import anabalen_zadaca_4.model.PostavkeAplikacije;
 public class AutomobilHelper {
 
     private PostavkeAplikacije postavke;
+    private Parkiraliste parkiraliste;
 
     int brojac;
     int zona;
@@ -20,33 +21,40 @@ public class AutomobilHelper {
     float ulaz;
 
     Generator generator = new Generator();
+    List<Automobil> sviAuti = new ArrayList<>();
+
+    
+    
 
     public AutomobilHelper() {
     }
 
-    public Automobil kreirajAutomobil(PostavkeAplikacije postavke) {
+    public List<Automobil> kreirajAutomobil(PostavkeAplikacije postavke, Parkiraliste parkiraliste) {
         this.postavke = postavke;
+        this.parkiraliste = parkiraliste;
         int brojAutomobila = postavke.getBrojAutomobila();
         Automobil automobil = null;
 
         /* kreira se broj automobila */
-        
         for (brojac = 1; brojac <= brojAutomobila; brojac++) {
-             
+
             float generiranaVrijednost1 = generator.generirajVrijednost1();
             float generiranaVrijednost2 = generator.generirajVrijednost2();
             float generiranaVrijednost3 = generator.generirajVrijednost3();
             //float generiranaVrijednostZaOdabir = generator.generirajOdabir();
-            
-            ulaz = (float)((postavke.getVremenskaJedinica()/postavke.getIntervalDolaska())*generiranaVrijednost1)*1000;
+
+            ulaz = (float) ((postavke.getVremenskaJedinica() / postavke.getIntervalDolaska()) * generiranaVrijednost1) * 1000;
             zona = (int) (postavke.getBrojZona() * generiranaVrijednost2) + 1;
             iznos = (postavke.getBrojZona() + 1 - zona) * postavke.getCijenaJedinice();
 
             automobil = new Automobil(brojac, ulaz, zona, true, iznos, generiranaVrijednost1, generiranaVrijednost2, generiranaVrijednost3);
-            System.out.println(automobil.getRedniBroj() + " " + automobil.getUlaz() + " Zona: "  + automobil.getZona() + " "  + automobil.getIznos());
+            System.out.println(automobil.getRedniBroj() + " " + automobil.getUlaz() + " Zona: " + automobil.getZona() + " " + automobil.getIznos());
+
+            sviAuti.add(automobil);
         }
         
-        return automobil;
+
+        return sviAuti;
     }
 
 }
