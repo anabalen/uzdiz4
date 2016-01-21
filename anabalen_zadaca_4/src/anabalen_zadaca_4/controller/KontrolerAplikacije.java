@@ -9,6 +9,7 @@ import anabalen_zadaca_4.state.OtvoriParkiraliste;
 import anabalen_zadaca_4.state.State;
 import anabalen_zadaca_4.state.ZatvoriParkiraliste;
 import anabalen_zadaca_4.thread.DretvaDolaska;
+import anabalen_zadaca_4.thread.DretvaKontrole;
 import anabalen_zadaca_4.thread.DretvaOdlaska;
 import anabalen_zadaca_4.view.PrikazPodataka;
 import java.util.List;
@@ -24,10 +25,12 @@ public class KontrolerAplikacije {
     private PrikazPodataka prikaz;
     boolean statusParkinga = true;
 
-    private boolean aktivnaDretva;
-    private boolean aktivnaDrugaDretva;
+    private boolean aktivnaDretvaDolaska;
+    private boolean aktivnaDretvaOdlaska;
+    private boolean aktivnaDretvaKontrole;
     private DretvaDolaska dretvaDolaska;
     private DretvaOdlaska dretvaOdlaska;
+    private DretvaKontrole dretvaKontrole;
 
     List<Automobil> zona4;
     List<Automobil> zona3;
@@ -54,12 +57,12 @@ public class KontrolerAplikacije {
         List<Automobil> sviAuti = aHelper.kreirajAutomobil(postavke, parkiraliste);
 
         /* pokreni dretvu parkiranja */
-        if (!aktivnaDretva) {
+        if (!aktivnaDretvaDolaska) {
             dretvaDolaska = new DretvaDolaska(postavke.getIntervalDolaska(), parkiraliste, postavke, sviAuti);
             //postavljanje broja zona
             dretvaDolaska.postavljanjeZona();
             dretvaDolaska.start();
-            aktivnaDretva = true;
+            aktivnaDretvaDolaska = true;
             zona1 = dretvaDolaska.getZona1();
             zona2 = dretvaDolaska.getZona2();
             zona3 = dretvaDolaska.getZona3();
@@ -71,13 +74,23 @@ public class KontrolerAplikacije {
         }
 
         /* pokreni dretvu odlaska */
-        if (!aktivnaDrugaDretva) {
+        if (!aktivnaDretvaOdlaska) {
             dretvaOdlaska = new DretvaOdlaska(postavke, sviAuti, zona1, zona2, zona3, zona4, dretvaDolaska);
 
             dretvaOdlaska.start();
-            aktivnaDrugaDretva = true;
+            aktivnaDretvaOdlaska = true;
         } else {
             System.out.println("Dretva odlaska je vec pokrenuta.");
+        }
+
+        /* pokreni dretvu kontrole */
+        if (!aktivnaDretvaKontrole) {
+            dretvaKontrole = new DretvaKontrole(postavke, sviAuti, zona1, zona2, zona3, zona4);
+
+            dretvaKontrole.start();
+            aktivnaDretvaKontrole = true;
+        } else {
+            System.out.println("Dretva kontrole je vec pokrenuta.");
         }
 
         Context context = new Context();
@@ -97,48 +110,151 @@ public class KontrolerAplikacije {
                 switch (Integer.parseInt(unos)) {
                     case 1:
                         /* zatvaranje parkirališta za nove ulaze automobila */
+
                         if (!parkiraliste.isStatus()) {
-                            prikaz.ispisi("Parkiralište je već zatvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
+                            prikaz.ispisi("   Parkiralište je već zatvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
                         } else {
                             State zatvori = new ZatvoriParkiraliste();
                             context.setState(zatvori);
                             noviStatus = context.doAction(parkiraliste);
-                            System.out.println("Parkiraliste je sada zatvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
+                            prikaz.ispisi("   Parkiraliste je sada zatvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
                         }
 
                         break;
                     case 2:
                         /* otvaranje parkirališta za nove ulaze automobila */
+
                         if (parkiraliste.isStatus()) {
-                            prikaz.ispisi("Parkiralište je već otvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
+                            prikaz.ispisi("   Parkiralište je već otvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
                         } else {
                             State otvori = new OtvoriParkiraliste();
                             context.setState(otvori);
                             noviStatus = context.doAction(parkiraliste);
-                            System.out.println("Parkiralište je sada otvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
+                            prikaz.ispisi("   Parkiralište je sada otvoreno. \n");
+                            prikaz.ispisi("|**************************************| \n");
                         }
 
                         break;
                     case 3:
                         /* ispis zarada od parkiranja po zonama */
-
-                        System.out.println("Iznos u zoni 1: " + dretvaDolaska.getIznosZona1() + " "
-                                + "Iznos u zoni 2: " + dretvaDolaska.getIznosZona2() + " "
-                                + "Iznos u zoni 3: " + dretvaDolaska.getIznosZona3() + " "
-                                + "Iznos u zoni 4: " + dretvaDolaska.getIznosZona4());
+                        prikaz.ispisi("|*********************************| \n");
+                        if (postavke.getBrojZona() == 1) {
+                            prikaz.ispisi("   Iznos u zoni 1: " + dretvaDolaska.getIznosZona1() + " \n");
+                        } else if (postavke.getBrojZona() == 2) {
+                            prikaz.ispisi("   Iznos u zoni 1: " + dretvaDolaska.getIznosZona1() + " \n"
+                                    + "   Iznos u zoni 2: " + dretvaDolaska.getIznosZona2() + " \n");
+                        } else if (postavke.getBrojZona() == 3) {
+                            prikaz.ispisi("   Iznos u zoni 1: " + dretvaDolaska.getIznosZona1() + " \n"
+                                    + "   Iznos u zoni 2: " + dretvaDolaska.getIznosZona2() + " \n"
+                                    + "   Iznos u zoni 3: " + dretvaDolaska.getIznosZona3() + " \n");
+                        } else if (postavke.getBrojZona() == 4) {
+                            prikaz.ispisi("   Iznos u zoni 1: " + dretvaDolaska.getIznosZona1() + " \n"
+                                    + "   Iznos u zoni 2: " + dretvaDolaska.getIznosZona2() + " \n"
+                                    + "   Iznos u zoni 3: " + dretvaDolaska.getIznosZona3() + " \n"
+                                    + "   Iznos u zoni 4: " + dretvaDolaska.getIznosZona4() + " \n");
+                        }
+                        prikaz.ispisi("|*********************************| \n");
 
                         break;
                     case 4:
                         /* ispis zarada od kazni po zonama */
-                        prikaz.ispisi("Izabrana je opcija 4. \n");
+                        prikaz.ispisi("|*********************************| \n");
+                        if (postavke.getBrojZona() == 1) {
+                            prikaz.ispisi("   Kazne u zoni 1: " + dretvaKontrole.getKazneZona1() + " \n");
+                        } else if (postavke.getBrojZona() == 2) {
+                            prikaz.ispisi("   Kazne u zoni 1: " + dretvaKontrole.getKazneZona1() + " \n"
+                                    + "   Kazne u zoni 2: " + dretvaKontrole.getKazneZona2() + " \n");
+                        } else if (postavke.getBrojZona() == 3) {
+                            prikaz.ispisi("   Kazne u zoni 1: " + dretvaKontrole.getKazneZona1() + " \n"
+                                    + "   Kazne u zoni 2: " + dretvaKontrole.getKazneZona2() + " \n"
+                                    + "   Kazne u zoni 3: " + dretvaKontrole.getKazneZona3() + " \n");
+                        } else if (postavke.getBrojZona() == 4) {
+                            prikaz.ispisi("   Kazne u zoni 1: " + dretvaKontrole.getKazneZona1() + " \n"
+                                    + "   Kazne u zoni 2: " + dretvaKontrole.getKazneZona2() + " \n"
+                                    + "   Kazne u zoni 3: " + dretvaKontrole.getKazneZona3() + " \n"
+                                    + "   Kazne u zoni 4: " + dretvaKontrole.getKazneZona4() + " \n");
+                        }
+                        prikaz.ispisi("|*********************************| \n");
                         break;
+
                     case 5:
-                        /* ispis broja automobila koji nisu mogli parkirati po zonama */
-                        prikaz.ispisi("Izabrana je opcija 5. \n");
+                        int neparkirani1 = 0;
+                        int neparkirani2 = 0;
+                        int neparkirani3 = 0;
+                        int neparkirani4 = 0;
+                        for (int i = 0; i < dretvaDolaska.getNeparkirani().size(); i++) {
+                            if (dretvaDolaska.getNeparkirani().get(i).getZona() == 1) {
+                                neparkirani1++;
+                            } else if (dretvaDolaska.getNeparkirani().get(i).getZona() == 2) {
+                                neparkirani2++;
+                            } else if (dretvaDolaska.getNeparkirani().get(i).getZona() == 3) {
+                                neparkirani3++;
+                            } else if (dretvaDolaska.getNeparkirani().get(i).getZona() == 4) {
+                                neparkirani4++;
+                            }
+                        }
+
+                        prikaz.ispisi("|******************************************| \n");
+                        if (postavke.getBrojZona() == 1) {
+                            prikaz.ispisi("   Broj neparkiranih u prvoj zoni je: " + neparkirani1 + " \n");
+                        } else if (postavke.getBrojZona() == 2) {
+                            prikaz.ispisi("   Broj neparkiranih u prvoj zoni je: " + neparkirani1 + " \n"
+                                    + "   Broj neparkiranih u drugoj zoni je: " + neparkirani2 + " \n");
+                        } else if (postavke.getBrojZona() == 3) {
+                            prikaz.ispisi("   Broj neparkiranih u prvoj zoni je: " + neparkirani1 + " \n"
+                                    + "   Broj neparkiranih u drugoj zoni je: " + neparkirani2 + " \n"
+                                    + "   Broj neparkiranih u trecoj zoni je: " + neparkirani3 + " \n");
+                        } else if (postavke.getBrojZona() == 4) {
+                            prikaz.ispisi("   Broj neparkiranih u prvoj zoni je: " + neparkirani1 + " \n"
+                                    + "   Broj neparkiranih u drugoj zoni je: " + neparkirani2 + " \n"
+                                    + "   Broj neparkiranih u trecoj zoni je: " + neparkirani3 + " \n"
+                                    + "   Broj neparkiranih u cetvrtoj zoni je: " + neparkirani4 + " \n");
+                        }
+                        prikaz.ispisi("|******************************************| \n");
                         break;
                     case 6:
                         /* ispis broja automobila koje je pauk odveo na deponij po zonama */
-                        prikaz.ispisi("Izabrana je opcija 6. \n");
+                        int deponij1 = 0;
+                        int deponij2 = 0;
+                        int deponij3 = 0;
+                        int deponij4 = 0;
+                        for (int i = 0; i < dretvaKontrole.getDeponij().size(); i++) {
+                            if (dretvaKontrole.getDeponij().get(i).getZona() == 1) {
+                                deponij1++;
+                            } else if (dretvaKontrole.getDeponij().get(i).getZona() == 2) {
+                                deponij2++;
+                            } else if (dretvaKontrole.getDeponij().get(i).getZona() == 3) {
+                                deponij3++;
+                            } else if (dretvaKontrole.getDeponij().get(i).getZona() == 4) {
+                                deponij4++;
+                            }
+                        }
+
+                        prikaz.ispisi("|****************************************************| \n");
+                        if (postavke.getBrojZona() == 1) {
+                            prikaz.ispisi("   Broj automobila na deponiju iz prve zone je: " + deponij1 + " \n");
+                        } else if (postavke.getBrojZona() == 2) {
+                            prikaz.ispisi("   Broj automobila na deponiju iz prve zone je: " + deponij1 + " \n"
+                                    + "   Broj automobila na deponiju iz druge zone je: " + deponij2 + " \n");
+                        } else if (postavke.getBrojZona() == 3) {
+                            prikaz.ispisi("   Broj automobila na deponiju iz prve zone je: " + deponij1 + " \n"
+                                    + "   Broj automobila na deponiju iz druge zone je: " + deponij2 + " \n"
+                                    + "   Broj automobila na deponiju iz trece zone je: " + deponij3 + " \n");
+                        } else if (postavke.getBrojZona() == 4) {
+                            prikaz.ispisi("   Broj automobila na deponiju iz prve zone je: " + deponij1 + " \n"
+                                    + "   Broj automobila na deponiju iz druge zone je: " + deponij2 + " \n"
+                                    + "   Broj automobila na deponiju iz trece zone je: " + deponij3 + " \n"
+                                    + "   Broj automobila na deponiju iz cetvrte zone je: " + deponij4 + " \n");
+                        }
+                        prikaz.ispisi("|****************************************************| \n");
+
                         break;
                     case 7:
                         /* ispis 5 automobila s najviše parkirana */
@@ -146,7 +262,57 @@ public class KontrolerAplikacije {
                         break;
                     case 8:
                         /* stanje parkirnih mjesta po zonama (% zauzetih) */
-                        prikaz.ispisi("Izabrana je opcija 8. \n");
+                        float postotak1 = 0;
+                        float postotak2 = 0;
+                        float postotak3 = 0;
+                        float postotak4 = 0;
+
+                        if (postavke.getBrojZona() == 1) {
+                            for (int i = 0; i < dretvaDolaska.getZona1().size(); i++) {
+                                postotak1 = (((float) dretvaDolaska.getZona1().size() / (float) dretvaDolaska.getKapacitetZone1()) * 100);
+                            }
+                        }
+
+                        if (postavke.getBrojZona() == 2) {
+                            for (int i = 0; i < dretvaDolaska.getZona2().size(); i++) {
+                                postotak1 = (((float) dretvaDolaska.getZona1().size() / (float) dretvaDolaska.getKapacitetZone1()) * 100);
+                                postotak2 = (((float) dretvaDolaska.getZona2().size() / (float) dretvaDolaska.getKapacitetZone2()) * 100);
+                            }
+                        }
+                        if (postavke.getBrojZona() == 3) {
+                            for (int i = 0; i < dretvaDolaska.getZona3().size(); i++) {
+                                postotak1 = (((float) dretvaDolaska.getZona1().size() / (float) dretvaDolaska.getKapacitetZone1()) * 100);
+                                postotak2 = (((float) dretvaDolaska.getZona2().size() / (float) dretvaDolaska.getKapacitetZone2()) * 100);
+                                postotak3 = (((float) dretvaDolaska.getZona3().size() / (float) dretvaDolaska.getKapacitetZone3()) * 100);
+                            }
+                        }
+                        if (postavke.getBrojZona() == 4) {
+                            for (int i = 0; i < dretvaDolaska.getZona4().size(); i++) {
+                                postotak1 = (((float) dretvaDolaska.getZona1().size() / (float) dretvaDolaska.getKapacitetZone1()) * 100);
+                                postotak2 = (((float) dretvaDolaska.getZona2().size() / (float) dretvaDolaska.getKapacitetZone2()) * 100);
+                                postotak3 = (((float) dretvaDolaska.getZona3().size() / (float) dretvaDolaska.getKapacitetZone3()) * 100);
+                                postotak4 = (((float) dretvaDolaska.getZona4().size() / (float) dretvaDolaska.getKapacitetZone4()) * 100);
+                            }
+                        }
+
+                        prikaz.ispisi("|*********************************| \n");
+                        if (postavke.getBrojZona() == 1) {
+                            prikaz.ispisi("   Zona 1 - zauzeto: " + postotak1 + "% \n");
+                        } else if (postavke.getBrojZona() == 2) {
+                            prikaz.ispisi("   Zona 1 - zauzeto: " + postotak1 + "% \n"
+                                    + "   Zona 2 - zauzeto: " + postotak2 + "% \n");
+                        } else if (postavke.getBrojZona() == 3) {
+                            prikaz.ispisi("   Zona 1 - zauzeto: " + postotak1 + "% \n"
+                                    + "   Zona 2 - zauzeto: " + postotak2 + "% \n"
+                                    + "   Zona 3 - zauzeto: " + postotak3 + "% \n");
+                        } else if (postavke.getBrojZona() == 4) {
+                            prikaz.ispisi("   Zona 1 - zauzeto: " + postotak1 + "% \n"
+                                    + "   Zona 2 - zauzeto: " + postotak2 + "% \n"
+                                    + "   Zona 3 - zauzeto: " + postotak3 + "% \n"
+                                    + "   Zona 4 - zauzeto: " + postotak4 + "% \n");
+                        }
+                        prikaz.ispisi("|*********************************| \n");
+
                         break;
 
                 }
@@ -155,5 +321,6 @@ public class KontrolerAplikacije {
 
         dretvaDolaska.interrupt();
         dretvaOdlaska.interrupt();
+        dretvaKontrole.interrupt();
     }
 }

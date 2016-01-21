@@ -25,10 +25,17 @@ public class DretvaDolaska extends Thread {
     int iznosZona3;
     int iznosZona4;
 
-    List<Automobil> zona4;
-    List<Automobil> zona3;
-    List<Automobil> zona2;
-    List<Automobil> zona1;
+    int kapacitetZone1;
+    int kapacitetZone2;
+    int kapacitetZone3;
+    int kapacitetZone4;
+
+    List<Automobil> zona4 = new ArrayList<>();
+    List<Automobil> zona3 = new ArrayList<>();
+    List<Automobil> zona2 = new ArrayList<>();
+    List<Automobil> zona1 = new ArrayList<>();
+
+    List<Automobil> neparkirani = new ArrayList<>();
 
     PostavkeAplikacije postavke;
     Parkiraliste parkiraliste;
@@ -118,11 +125,13 @@ public class DretvaDolaska extends Thread {
 
                 if (zonaAuta == 4) {
                     int kapacitetZone4 = zonaAuta * postavke.getKapacitetZone();
+                    setKapacitetZone4(kapacitetZone4);
 
                     if (kapacitetZone4 > zona4.size()) {
                         zona4.add(automobil);
                         sviAuti.remove(automobil);
                         automobil.setStatus(true);
+                        automobil.setVazecaKarta(true);
                         System.out.println("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran");
 
                         //računanje iznosa plaćanja
@@ -132,11 +141,13 @@ public class DretvaDolaska extends Thread {
                     }
                 } else if (zonaAuta == 3) {
                     int kapacitetZone3 = zonaAuta * postavke.getKapacitetZone();
+                    setKapacitetZone3(kapacitetZone3);
 
                     if (kapacitetZone3 > zona3.size()) {
                         zona3.add(automobil);
                         sviAuti.remove(automobil);
                         automobil.setStatus(true);
+                        automobil.setVazecaKarta(true);
                         System.out.println("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran");
 
                         //računanje iznosa plaćanja
@@ -146,25 +157,28 @@ public class DretvaDolaska extends Thread {
                     }
                 } else if (zonaAuta == 2) {
                     int kapacitetZone2 = zonaAuta * postavke.getKapacitetZone();
+                    setKapacitetZone2(kapacitetZone2);
 
                     if (kapacitetZone2 > zona2.size()) {
                         zona2.add(automobil);
                         sviAuti.remove(automobil);
                         automobil.setStatus(true);
+                        automobil.setVazecaKarta(true);
                         System.out.println("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran");
 
                         //računanje iznosa plaćanja
                         iznosZona2 = iznosZona2 + automobil.getIznos();
                     } else {
-                        System.out.println("U zoni 3 nema mjesta.");
+                        System.out.println("U zoni 2 nema mjesta.");
                     }
                 } else if (zonaAuta == 1) {
                     int kapacitetZone1 = zonaAuta * postavke.getKapacitetZone();
-
+                    setKapacitetZone1(kapacitetZone1);
                     if (kapacitetZone1 > zona1.size()) {
                         zona1.add(automobil);
                         sviAuti.remove(automobil);
                         automobil.setStatus(true);
+                        automobil.setVazecaKarta(true);
                         System.out.println("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran");
 
                         //računanje iznosa plaćanja
@@ -178,6 +192,8 @@ public class DretvaDolaska extends Thread {
             } else {
                 automobil.setStatus(false);
                 System.out.println("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: nije parkiran");
+
+                neparkirani.add(automobil);
             }
         }
 
@@ -253,6 +269,46 @@ public class DretvaDolaska extends Thread {
 
     public void setSviAuti(List<Automobil> sviAuti) {
         this.sviAuti = sviAuti;
+    }
+
+    public List<Automobil> getNeparkirani() {
+        return neparkirani;
+    }
+
+    public void setNeparkirani(List<Automobil> neparkirani) {
+        this.neparkirani = neparkirani;
+    }
+
+    public int getKapacitetZone1() {
+        return kapacitetZone1;
+    }
+
+    public int getKapacitetZone2() {
+        return kapacitetZone2;
+    }
+
+    public int getKapacitetZone3() {
+        return kapacitetZone3;
+    }
+
+    public int getKapacitetZone4() {
+        return kapacitetZone4;
+    }
+
+    public void setKapacitetZone1(int kapacitetZone1) {
+        this.kapacitetZone1 = kapacitetZone1;
+    }
+
+    public void setKapacitetZone2(int kapacitetZone2) {
+        this.kapacitetZone2 = kapacitetZone2;
+    }
+
+    public void setKapacitetZone3(int kapacitetZone3) {
+        this.kapacitetZone3 = kapacitetZone3;
+    }
+
+    public void setKapacitetZone4(int kapacitetZone4) {
+        this.kapacitetZone4 = kapacitetZone4;
     }
 
     

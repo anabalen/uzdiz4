@@ -14,12 +14,14 @@ public class Automobil {
     float generiranaVrijednost1;
     float generiranaVrijednost2;
     float generiranaVrijednost3;
+    int produljenje;
+    boolean vazecaKarta;
     
     
     public Automobil() {
     }
     
-    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3){
+    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3, int produljenje, boolean vazecaKarta){
         this.redniBroj = redniBroj;
         this.ulaz = ulaz;
         this.zona = zona;
@@ -29,6 +31,8 @@ public class Automobil {
         this.generiranaVrijednost1 = generiranaVrijednost1;
         this.generiranaVrijednost2 = generiranaVrijednost2;
         this.generiranaVrijednost3 = generiranaVrijednost3;
+        this.produljenje = produljenje;
+        this.vazecaKarta = vazecaKarta;
     }
 
     public int getRedniBroj() {
@@ -102,7 +106,21 @@ public class Automobil {
     public void setVrijemeParkiranja(int vrijemeParkiranja) {
         this.vrijemeParkiranja = vrijemeParkiranja;
     }
-    
-    
-    
+
+    public int getProduljenje() {
+        return produljenje;
+    }
+
+    public void setProduljenje(int produljenje) {
+        this.produljenje = produljenje;
+    }
+
+    public boolean isVazecaKarta() {
+        return vazecaKarta;
+    }
+
+    public void setVazecaKarta(boolean vazecaKarta) {
+        this.vazecaKarta = vazecaKarta;
+    }
+     
 }
