@@ -18,7 +18,7 @@ public class PrikazPodataka {
                 + "\t| 4   - ispis zarada od kazni po zonama                                      |\n"
                 + "\t| 5   - ispis broja automobila koji nisu mogli parkirati po zonama           |\n"
                 + "\t| 6   - ispis broja automobila koje je pauk odveo na deponij po zonama       |\n"
-                + "\t| 7   - ispis 5 automobila s najviše parkirana                               |\n"
+                + "\t| 7   - ispis 5 automobila s najviše parkiranja                               |\n"
                 + "\t| 8   - stanje parkirnih mjesta po zonama (% zauzetih)                       |\n"
                 + "\t| Q   - prekid rada                                                          |\n"
                 + "\t|----------------------------------------------------------------------------|";

@@ -2,6 +2,7 @@ package anabalen_zadaca_4.thread;
 
 import anabalen_zadaca_4.automobili.Automobil;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
+import anabalen_zadaca_4.view.PrikazPodataka;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +28,16 @@ public class DretvaKontrole extends Thread {
     List<Automobil> zona1;
 
     List<Automobil> deponij = new ArrayList<>();
+    PrikazPodataka prikaz;
 
-    public DretvaKontrole(PostavkeAplikacije postavke, List<Automobil> sviAuti, List<Automobil> zona1, List<Automobil> zona2, List<Automobil> zona3, List<Automobil> zona4) {
+    public DretvaKontrole(PostavkeAplikacije postavke, List<Automobil> sviAuti, List<Automobil> zona1, List<Automobil> zona2, List<Automobil> zona3, List<Automobil> zona4, PrikazPodataka prikaz) {
         this.postavke = postavke;
         this.sviAuti = sviAuti;
         this.zona1 = zona1;
         this.zona2 = zona2;
         this.zona3 = zona3;
         this.zona4 = zona4;
+        this.prikaz = prikaz;
     }
 
     @Override
@@ -44,25 +47,22 @@ public class DretvaKontrole extends Thread {
 
     @Override
     public void run() {
-        //System.out.println("Dretva aktivirana.");
         aktivna = true;
 
         while (aktivna) {
 
             if (!sviAuti.isEmpty()) {
                 radi = true;
-                //System.out.println("Dretva zapocinje s radom.");
-
                 //funkcija dretve
                 kontrolaParkinga();
 
             } else {
-                System.out.println("Svi auti su sparkirani.");
+                //System.out.println("Svi auti su sparkirani.");
             }
 
             try {
-                int pauza = (int) ((postavke.getVremenskaJedinica() / postavke.getIntervalKontrole()) * 10000);
-                //System.out.println("Dretva spava " + pauza + " milisekundi.");
+                int pauza = (int) ((postavke.getVremenskaJedinica() / postavke.getIntervalKontrole()) * 1000);
+
                 radi = false;
                 sleep(pauza);
             } catch (InterruptedException ex) {
@@ -157,7 +157,5 @@ public class DretvaKontrole extends Thread {
     public void setDeponij(List<Automobil> deponij) {
         this.deponij = deponij;
     }
-
-
 
 }

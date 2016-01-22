@@ -12,6 +12,9 @@ import anabalen_zadaca_4.thread.DretvaDolaska;
 import anabalen_zadaca_4.thread.DretvaKontrole;
 import anabalen_zadaca_4.thread.DretvaOdlaska;
 import anabalen_zadaca_4.view.PrikazPodataka;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,6 +39,7 @@ public class KontrolerAplikacije {
     List<Automobil> zona3;
     List<Automobil> zona2;
     List<Automobil> zona1;
+    List<Automobil> deponij;
 
     public KontrolerAplikacije() {
     }
@@ -58,7 +62,7 @@ public class KontrolerAplikacije {
 
         /* pokreni dretvu parkiranja */
         if (!aktivnaDretvaDolaska) {
-            dretvaDolaska = new DretvaDolaska(postavke.getIntervalDolaska(), parkiraliste, postavke, sviAuti);
+            dretvaDolaska = new DretvaDolaska(postavke.getIntervalDolaska(), parkiraliste, postavke, sviAuti, prikaz);
             //postavljanje broja zona
             dretvaDolaska.postavljanjeZona();
             dretvaDolaska.start();
@@ -70,27 +74,27 @@ public class KontrolerAplikacije {
             sviAuti = dretvaDolaska.getSviAuti();
 
         } else {
-            System.out.println("Dretva dolaska je vec pokrenuta.");
+            prikaz.ispisi("Dretva dolaska je vec pokrenuta. \n");
         }
 
         /* pokreni dretvu odlaska */
         if (!aktivnaDretvaOdlaska) {
-            dretvaOdlaska = new DretvaOdlaska(postavke, sviAuti, zona1, zona2, zona3, zona4, dretvaDolaska);
+            dretvaOdlaska = new DretvaOdlaska(postavke, sviAuti, zona1, zona2, zona3, zona4, dretvaDolaska, prikaz);
 
             dretvaOdlaska.start();
             aktivnaDretvaOdlaska = true;
         } else {
-            System.out.println("Dretva odlaska je vec pokrenuta.");
+            prikaz.ispisi("Dretva odlaska je vec pokrenuta. \n");
         }
 
         /* pokreni dretvu kontrole */
         if (!aktivnaDretvaKontrole) {
-            dretvaKontrole = new DretvaKontrole(postavke, sviAuti, zona1, zona2, zona3, zona4);
+            dretvaKontrole = new DretvaKontrole(postavke, sviAuti, zona1, zona2, zona3, zona4, prikaz);
 
             dretvaKontrole.start();
             aktivnaDretvaKontrole = true;
         } else {
-            System.out.println("Dretva kontrole je vec pokrenuta.");
+            prikaz.ispisi("Dretva kontrole je vec pokrenuta. \n");
         }
 
         Context context = new Context();
@@ -258,7 +262,35 @@ public class KontrolerAplikacije {
                         break;
                     case 7:
                         /* ispis 5 automobila s najviše parkirana */
-                        prikaz.ispisi("Izabrana je opcija 7. \n");
+                        List<Automobil> listaSvihAuta = new ArrayList<>();
+                        listaSvihAuta.addAll(sviAuti);
+                        listaSvihAuta.addAll(zona1);
+                        listaSvihAuta.addAll(zona2);
+                        listaSvihAuta.addAll(zona3);
+                        listaSvihAuta.addAll(zona4);
+                        listaSvihAuta.addAll(dretvaKontrole.getDeponij());
+                    
+                        /* sortiranje liste prema broju parkiranja DESC */
+                        Collections.sort(listaSvihAuta, new Comparator<Automobil>() {
+
+                            public int compare(Automobil a1, Automobil a2) {
+                                if(a1.getBrojParkiranja() > a2.getBrojParkiranja()){
+                                    return -1;
+                                }
+                                else if(a1.getBrojParkiranja()<a2.getBrojParkiranja()){
+                                    return 1;
+                                }
+                            
+                            return 0;}
+                            
+                        });
+                       
+                        prikaz.ispisi("|****************************************************| \n");
+                        for(int i=0; i<5; i++){
+                            prikaz.ispisi(" " + listaSvihAuta.get(i) + "\n");
+                        }
+
+                        prikaz.ispisi("|****************************************************| \n");
                         break;
                     case 8:
                         /* stanje parkirnih mjesta po zonama (% zauzetih) */

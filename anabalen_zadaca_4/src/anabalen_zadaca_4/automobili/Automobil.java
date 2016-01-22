@@ -16,12 +16,13 @@ public class Automobil {
     float generiranaVrijednost3;
     int produljenje;
     boolean vazecaKarta;
+    int brojParkiranja;
     
     
     public Automobil() {
     }
     
-    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3, int produljenje, boolean vazecaKarta){
+    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3, int produljenje, boolean vazecaKarta, int brojParkiranja){
         this.redniBroj = redniBroj;
         this.ulaz = ulaz;
         this.zona = zona;
@@ -33,6 +34,7 @@ public class Automobil {
         this.generiranaVrijednost3 = generiranaVrijednost3;
         this.produljenje = produljenje;
         this.vazecaKarta = vazecaKarta;
+        this.brojParkiranja = brojParkiranja;
     }
 
     public int getRedniBroj() {
@@ -122,5 +124,17 @@ public class Automobil {
     public void setVazecaKarta(boolean vazecaKarta) {
         this.vazecaKarta = vazecaKarta;
     }
+
+    public int getBrojParkiranja() {
+        return brojParkiranja;
+    }
+
+    public void setBrojParkiranja(int brojParkiranja) {
+        this.brojParkiranja = brojParkiranja;
+    }
      
+    public String toString(){
+        return "Automobil broj " + redniBroj + " - " + brojParkiranja; 
+    }
+    
 }
