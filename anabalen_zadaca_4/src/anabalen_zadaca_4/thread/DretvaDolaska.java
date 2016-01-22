@@ -1,9 +1,9 @@
 package anabalen_zadaca_4.thread;
 
-import anabalen_zadaca_4.automobili.Automobil;
+import anabalen_zadaca_4.model.Automobil;
 import anabalen_zadaca_4.helper.Generator;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
-import anabalen_zadaca_4.parkiraliste.Parkiraliste;
+import anabalen_zadaca_4.model.Parkiraliste;
 import anabalen_zadaca_4.view.PrikazPodataka;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class DretvaDolaska extends Thread {
     int kapacitetZone2;
     int kapacitetZone3;
     int kapacitetZone4;
-    
+
     int brojParkiranja;
 
     List<Automobil> zona4 = new ArrayList<>();
@@ -126,11 +126,12 @@ public class DretvaDolaska extends Thread {
 
                     if (kapacitetZone4 > zona4.size()) {
                         zona4.add(automobil);
-                       //broj parkiranja povecavati svaki puta kad se auto sparkira
+                        //broj parkiranja povecavati svaki puta kad se auto sparkira
                         brojParkiranja = automobil.getBrojParkiranja();
                         brojParkiranja++;
                         automobil.setBrojParkiranja(brojParkiranja);
                         sviAuti.remove(automobil);
+                        i--;
                         automobil.setStatus(true);
                         automobil.setVazecaKarta(true);
                         prikaz.ispisi("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran \n");
@@ -138,7 +139,7 @@ public class DretvaDolaska extends Thread {
                         //računanje iznosa plaćanja
                         iznosZona4 = iznosZona4 + automobil.getIznos();
                     } else {
-                        prikaz.ispisi("U zoni 4 nema mjesta za automobil broj." + automobil.getRedniBroj() + "\n");
+                        prikaz.ispisi("U zoni 4 nema mjesta za automobil broj " + automobil.getRedniBroj() + "\n");
                     }
                 } else if (zonaAuta == 3) {
                     int kapacitetZone3 = zonaAuta * postavke.getKapacitetZone();
@@ -151,6 +152,7 @@ public class DretvaDolaska extends Thread {
                         brojParkiranja++;
                         automobil.setBrojParkiranja(brojParkiranja);
                         sviAuti.remove(automobil);
+                        i--;
                         automobil.setStatus(true);
                         automobil.setVazecaKarta(true);
                         prikaz.ispisi("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran \n");
@@ -158,7 +160,7 @@ public class DretvaDolaska extends Thread {
                         //računanje iznosa plaćanja
                         iznosZona3 = iznosZona3 + automobil.getIznos();
                     } else {
-                        prikaz.ispisi("U zoni 3 nema mjesta za automobil broj." + automobil.getRedniBroj() + "\n");
+                        prikaz.ispisi("U zoni 3 nema mjesta za automobil broj " + automobil.getRedniBroj() + "\n");
                     }
                 } else if (zonaAuta == 2) {
                     int kapacitetZone2 = zonaAuta * postavke.getKapacitetZone();
@@ -171,6 +173,7 @@ public class DretvaDolaska extends Thread {
                         brojParkiranja++;
                         automobil.setBrojParkiranja(brojParkiranja);
                         sviAuti.remove(automobil);
+                        i--;
                         automobil.setStatus(true);
                         automobil.setVazecaKarta(true);
                         prikaz.ispisi("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran \n");
@@ -178,7 +181,7 @@ public class DretvaDolaska extends Thread {
                         //računanje iznosa plaćanja
                         iznosZona2 = iznosZona2 + automobil.getIznos();
                     } else {
-                        prikaz.ispisi("U zoni 2 nema mjesta za automobil broj." + automobil.getRedniBroj() + "\n");
+                        prikaz.ispisi("U zoni 2 nema mjesta za automobil broj " + automobil.getRedniBroj() + "\n");
                     }
                 } else if (zonaAuta == 1) {
                     int kapacitetZone1 = zonaAuta * postavke.getKapacitetZone();
@@ -190,6 +193,7 @@ public class DretvaDolaska extends Thread {
                         brojParkiranja++;
                         automobil.setBrojParkiranja(brojParkiranja);
                         sviAuti.remove(automobil);
+                        i--;
                         automobil.setStatus(true);
                         automobil.setVazecaKarta(true);
                         prikaz.ispisi("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: parkiran \n");
@@ -197,11 +201,10 @@ public class DretvaDolaska extends Thread {
                         //računanje iznosa plaćanja
                         iznosZona1 = iznosZona1 + automobil.getIznos();
                     } else {
-                        prikaz.ispisi("U zoni 1 nema mjesta za automobil broj." + automobil.getRedniBroj() + "\n");
+                        prikaz.ispisi("U zoni 1 nema mjesta za automobil broj " + automobil.getRedniBroj() + "\n");
                     }
-                }
-                //vraćanje "i" na nulu zbog brisanja elementa iz liste
-                i--;
+                } //vraćanje "i" na nulu zbog brisanja elementa iz liste
+                
             } else {
                 automobil.setStatus(false);
                 prikaz.ispisi("Automobil " + automobil.getRedniBroj() + ", zona " + automobil.getZona() + " iznos " + automobil.getIznos() + " status: nije parkiran \n");
@@ -323,7 +326,5 @@ public class DretvaDolaska extends Thread {
     public void setKapacitetZone4(int kapacitetZone4) {
         this.kapacitetZone4 = kapacitetZone4;
     }
-    
-    
 
 }

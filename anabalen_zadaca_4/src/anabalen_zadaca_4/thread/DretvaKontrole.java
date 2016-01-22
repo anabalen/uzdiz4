@@ -1,6 +1,6 @@
 package anabalen_zadaca_4.thread;
 
-import anabalen_zadaca_4.automobili.Automobil;
+import anabalen_zadaca_4.model.Automobil;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
 import anabalen_zadaca_4.view.PrikazPodataka;
 import java.util.ArrayList;

@@ -1,10 +1,11 @@
-package anabalen_zadaca_4.automobili;
+package anabalen_zadaca_4.model;
 
 /**
  *
  * @author Ana-Marija
  */
 public class Automobil {
+
     int redniBroj;
     float ulaz;
     int zona;
@@ -17,12 +18,11 @@ public class Automobil {
     int produljenje;
     boolean vazecaKarta;
     int brojParkiranja;
-    
-    
+
     public Automobil() {
     }
-    
-    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3, int produljenje, boolean vazecaKarta, int brojParkiranja){
+
+    public Automobil(int redniBroj, float ulaz, int zona, boolean status, int iznos, int vrijemeParkiranja, float generiranaVrijednost1, float generiranaVrijednost2, float generiranaVrijednost3, int produljenje, boolean vazecaKarta, int brojParkiranja) {
         this.redniBroj = redniBroj;
         this.ulaz = ulaz;
         this.zona = zona;
@@ -68,7 +68,7 @@ public class Automobil {
     public float getGeneriranaVrijednost3() {
         return generiranaVrijednost3;
     }
-    
+
     public void setRedniBroj(int redniBroj) {
         this.redniBroj = redniBroj;
     }
@@ -132,9 +132,9 @@ public class Automobil {
     public void setBrojParkiranja(int brojParkiranja) {
         this.brojParkiranja = brojParkiranja;
     }
-     
-    public String toString(){
-        return "Automobil broj " + redniBroj + " - " + brojParkiranja; 
+
+    public String toString() {
+        return "Automobil broj " + redniBroj + " - " + brojParkiranja + " puta parkiran.";
     }
-    
+
 }

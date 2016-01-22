@@ -2,10 +2,6 @@ package anabalen_zadaca_4.controller;
 
 import anabalen_zadaca_4.model.PostavkeAplikacije;
 import anabalen_zadaca_4.view.PrikazPodataka;
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

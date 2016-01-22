@@ -1,8 +1,8 @@
 package anabalen_zadaca_4.helper;
 
-import anabalen_zadaca_4.automobili.Automobil;
+import anabalen_zadaca_4.model.Automobil;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
-import anabalen_zadaca_4.parkiraliste.Parkiraliste;
+import anabalen_zadaca_4.model.Parkiraliste;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +26,6 @@ public class AutomobilHelper {
 
     Generator generator = new Generator();
     List<Automobil> sviAuti = new ArrayList<>();
-
-    
-    
 
     public AutomobilHelper() {
     }
@@ -54,11 +51,10 @@ public class AutomobilHelper {
 
             /* kreiranje automobila */
             automobil = new Automobil(brojac, ulaz, zona, true, iznos, vrijemeParkiranja, generiranaVrijednost1, generiranaVrijednost2, generiranaVrijednost3, produljenje, vazecaKarta, brojParkiranja);
-            System.out.println(automobil.getRedniBroj() + " " + automobil.getUlaz() + " Zona: " + automobil.getZona() + " " + automobil.getIznos());
+           
 
             sviAuti.add(automobil);
         }
-        
 
         return sviAuti;
     }

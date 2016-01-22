@@ -5,7 +5,7 @@ package anabalen_zadaca_4.model;
  * @author Ana-Marija
  */
 public class PostavkeAplikacije {
-    
+
     private int brojAutomobila;
     private int brojZona;
     private int kapacitetZone;
@@ -19,7 +19,7 @@ public class PostavkeAplikacije {
 
     /**
      * Spremanje ulaznih parametara aplikacije
-     * 
+     *
      */
     public PostavkeAplikacije() {
     }
@@ -117,5 +117,4 @@ public class PostavkeAplikacije {
         this.kaznaParkiranja = kaznaParkiranja;
     }
 
-    
 }

@@ -1,6 +1,6 @@
 package anabalen_zadaca_4.thread;
 
-import anabalen_zadaca_4.automobili.Automobil;
+import anabalen_zadaca_4.model.Automobil;
 import anabalen_zadaca_4.helper.Generator;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
 import anabalen_zadaca_4.view.PrikazPodataka;
@@ -25,7 +25,7 @@ public class DretvaOdlaska extends Thread {
     DretvaDolaska dretvaDolaska;
     int produljenje;
     private PrikazPodataka prikaz;
-    
+
     int brojParkiranja;
 
     List<Automobil> zona4;
@@ -84,7 +84,6 @@ public class DretvaOdlaska extends Thread {
 
     private void odabirVlasnika() {
 
-       
         for (int i = 0; i < zona1.size(); i++) {
             int izbor = generator.generirajOdabir();
 
@@ -121,7 +120,7 @@ public class DretvaOdlaska extends Thread {
                     break;
             }
         }
-        
+
         for (int i = 0; i < zona2.size(); i++) {
             int izbor = generator.generirajOdabir();
 
@@ -136,7 +135,7 @@ public class DretvaOdlaska extends Thread {
                     zona2.get(i).setVazecaKarta(false);
                     sviAuti.add(zona2.get(i));
                     zona2.remove(zona2.get(i));
-                   
+
                     i--;
                     break;
                 case 2:
@@ -153,13 +152,13 @@ public class DretvaOdlaska extends Thread {
                         iznosZona2 = iznosZona2 + zona2.get(i).getIznos();
                         dretvaDolaska.setIznosZona2(iznosZona2);
                     } else {
-                       prikaz.ispisi("Redni broj auta " + zona2.get(i).getRedniBroj() + " - ne mogu produljiti parking zbog max puta. \n");
+                        prikaz.ispisi("Redni broj auta " + zona2.get(i).getRedniBroj() + " - ne mogu produljiti parking zbog max puta. \n");
                         zona2.get(i).setVazecaKarta(false);
                     }
                     break;
             }
         }
-        
+
         for (int i = 0; i < zona3.size(); i++) {
             int izbor = generator.generirajOdabir();
 
@@ -174,11 +173,11 @@ public class DretvaOdlaska extends Thread {
                     zona3.get(i).setVazecaKarta(false);
                     sviAuti.add(zona3.get(i));
                     zona3.remove(zona3.get(i));
-                    
+
                     i--;
                     break;
                 case 2:
-                   prikaz.ispisi("Redni broj auta " + zona3.get(i).getRedniBroj() + "odabir vlasnika - produljiti \n");
+                    prikaz.ispisi("Redni broj auta " + zona3.get(i).getRedniBroj() + "odabir vlasnika - produljiti \n");
                     produljenje = zona3.get(i).getProduljenje();
                     if (produljenje < 2) {
                         produljenje++;
@@ -191,14 +190,14 @@ public class DretvaOdlaska extends Thread {
                         iznosZona3 = iznosZona3 + zona3.get(i).getIznos();
                         dretvaDolaska.setIznosZona3(iznosZona3);
                     } else {
-                       prikaz.ispisi("Redni broj auta " + zona3.get(i).getRedniBroj() + " - ne mogu produljiti parking zbog max puta. \n");
+                        prikaz.ispisi("Redni broj auta " + zona3.get(i).getRedniBroj() + " - ne mogu produljiti parking zbog max puta. \n");
                         zona3.get(i).setVazecaKarta(false);
-                        
+
                     }
                     break;
             }
         }
-        
+
         for (int i = 0; i < zona4.size(); i++) {
             int izbor = generator.generirajOdabir();
 
@@ -213,7 +212,7 @@ public class DretvaOdlaska extends Thread {
                     zona4.get(i).setVazecaKarta(false);
                     sviAuti.add(zona4.get(i));
                     zona4.remove(zona4.get(i));
-                    
+
                     i--;
                     break;
                 case 2:
@@ -236,7 +235,6 @@ public class DretvaOdlaska extends Thread {
                     break;
             }
         }
-        
-        
+
     }
 }

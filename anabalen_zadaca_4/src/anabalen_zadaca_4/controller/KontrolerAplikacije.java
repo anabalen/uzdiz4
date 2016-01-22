@@ -1,12 +1,12 @@
 package anabalen_zadaca_4.controller;
 
-import anabalen_zadaca_4.automobili.Automobil;
+import anabalen_zadaca_4.model.Automobil;
 import anabalen_zadaca_4.helper.AutomobilHelper;
 import anabalen_zadaca_4.model.PostavkeAplikacije;
-import anabalen_zadaca_4.parkiraliste.Parkiraliste;
-import anabalen_zadaca_4.state.Context;
+import anabalen_zadaca_4.model.Parkiraliste;
+import anabalen_zadaca_4.state.Kontekst;
 import anabalen_zadaca_4.state.OtvoriParkiraliste;
-import anabalen_zadaca_4.state.State;
+import anabalen_zadaca_4.state.Stanje;
 import anabalen_zadaca_4.state.ZatvoriParkiraliste;
 import anabalen_zadaca_4.thread.DretvaDolaska;
 import anabalen_zadaca_4.thread.DretvaKontrole;
@@ -97,7 +97,7 @@ public class KontrolerAplikacije {
             prikaz.ispisi("Dretva kontrole je vec pokrenuta. \n");
         }
 
-        Context context = new Context();
+        Kontekst context = new Kontekst();
         Parkiraliste noviStatus;
 
         String unos = "";
@@ -120,7 +120,7 @@ public class KontrolerAplikacije {
                             prikaz.ispisi("   Parkiralište je već zatvoreno. \n");
                             prikaz.ispisi("|**************************************| \n");
                         } else {
-                            State zatvori = new ZatvoriParkiraliste();
+                            Stanje zatvori = new ZatvoriParkiraliste();
                             context.setState(zatvori);
                             noviStatus = context.doAction(parkiraliste);
                             prikaz.ispisi("|**************************************| \n");
@@ -137,7 +137,7 @@ public class KontrolerAplikacije {
                             prikaz.ispisi("   Parkiralište je već otvoreno. \n");
                             prikaz.ispisi("|**************************************| \n");
                         } else {
-                            State otvori = new OtvoriParkiraliste();
+                            Stanje otvori = new OtvoriParkiraliste();
                             context.setState(otvori);
                             noviStatus = context.doAction(parkiraliste);
                             prikaz.ispisi("|**************************************| \n");
@@ -269,28 +269,27 @@ public class KontrolerAplikacije {
                         listaSvihAuta.addAll(zona3);
                         listaSvihAuta.addAll(zona4);
                         listaSvihAuta.addAll(dretvaKontrole.getDeponij());
-                    
+
                         /* sortiranje liste prema broju parkiranja DESC */
                         Collections.sort(listaSvihAuta, new Comparator<Automobil>() {
 
                             public int compare(Automobil a1, Automobil a2) {
-                                if(a1.getBrojParkiranja() > a2.getBrojParkiranja()){
+                                if (a1.getBrojParkiranja() > a2.getBrojParkiranja()) {
                                     return -1;
-                                }
-                                else if(a1.getBrojParkiranja()<a2.getBrojParkiranja()){
+                                } else if (a1.getBrojParkiranja() < a2.getBrojParkiranja()) {
                                     return 1;
                                 }
-                            
-                            return 0;}
-                            
-                        });
-                       
-                        prikaz.ispisi("|****************************************************| \n");
-                        for(int i=0; i<5; i++){
-                            prikaz.ispisi(" " + listaSvihAuta.get(i) + "\n");
-                        }
 
-                        prikaz.ispisi("|****************************************************| \n");
+                                return 0;
+                            }
+
+                        });
+
+                        prikaz.ispisi("|*****************************************| \n");
+                        for (int i = 0; i < 5; i++) {
+                            prikaz.ispisi("    " + listaSvihAuta.get(i) + "\n");
+                        }
+                        prikaz.ispisi("|*****************************************| \n");
                         break;
                     case 8:
                         /* stanje parkirnih mjesta po zonama (% zauzetih) */

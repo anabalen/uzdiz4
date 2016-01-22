@@ -1,17 +1,18 @@
-package anabalen_zadaca_4.parkiraliste;
+package anabalen_zadaca_4.model;
 
 /**
  *
  * @author Ana-Marija
  */
 public class Parkiraliste {
+
     int brZona;
     boolean status;
-    
+
     public Parkiraliste() {
     }
-    
-    public Parkiraliste(boolean status, int brZona){
+
+    public Parkiraliste(boolean status, int brZona) {
         this.status = status;
         this.brZona = brZona;
     }
@@ -31,7 +32,5 @@ public class Parkiraliste {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-    
+
 }
